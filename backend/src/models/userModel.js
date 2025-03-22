@@ -9,20 +9,16 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
-    unique: true,
-    match: [
-      /^\S+@\S+\.\S+$/,
-      'Please enter a valid email address'
-    ]
+    unique: true
   },
   password: {
     type: String,
     required: true
   },
-  role: {
-    type: String,
-    enum: ['user', 'admin'],
-    default: 'user'
+  isAdmin: {
+    type: Boolean,
+    required: true,
+    default: false
   }
 }, {
   timestamps: true
@@ -37,11 +33,10 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
-// Compare password for login
+// Compare password
 userSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
 const User = mongoose.model('User', userSchema);
-
 module.exports = User;
