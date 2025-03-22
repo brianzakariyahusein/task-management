@@ -1,14 +1,17 @@
 const mongoose = require('mongoose');
 
 const taskSchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: 'User',
+  },
   title: {
     type: String,
     required: true,
-    trim: true,
   },
   description: {
     type: String,
-    trim: true,
   },
   status: {
     type: String,
@@ -18,15 +21,8 @@ const taskSchema = new mongoose.Schema({
   dueDate: {
     type: Date,
   },
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
+}, {
+  timestamps: true,
 });
 
 const Task = mongoose.model('Task', taskSchema);
