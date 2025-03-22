@@ -4,7 +4,6 @@ const { protect } = require('../middlewares/authMiddleware');
 
 const router = express.Router();
 
-// Rute untuk tugas (CRUD)
 router.get('/', protect, getTasks);
 router.post('/', protect, createTask);
 router.put('/:id', protect, updateTask);
