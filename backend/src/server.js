@@ -1,19 +1,30 @@
 const express = require('express');
+const dotenv = require('dotenv');
 const connectDB = require('./config/db');
-require('dotenv').config();
+const userRoutes = require('./routes/userRoutes');
+const taskRoutes = require('./routes/taskRoutes');
+const { errorHandler, notFound } = require('./middlewares/errorMiddleware');
+
+dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 3000;
 
-// Koneksi ke Database
+// Connect to Database
 connectDB();
 
+// Middleware
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send('API is running...');
-});
+// Routes
+app.use('/api/users', userRoutes);
+app.use('/api/tasks', taskRoutes);
 
-app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
+// Error Handling Middleware
+app.use(notFound);
+app.use(errorHandler);
+
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
