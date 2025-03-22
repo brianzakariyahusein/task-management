@@ -4,18 +4,20 @@ const taskSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    ref: 'User',
+    ref: 'User', // Referensi ke User Model
   },
   title: {
     type: String,
     required: true,
+    trim: true,
   },
   description: {
     type: String,
+    trim: true,
   },
   status: {
     type: String,
-    enum: ['pending', 'in-progress', 'completed'],
+    enum: ['pending', 'in progress', 'completed'],
     default: 'pending',
   },
   dueDate: {
@@ -26,4 +28,5 @@ const taskSchema = new mongoose.Schema({
 });
 
 const Task = mongoose.model('Task', taskSchema);
+
 module.exports = Task;
