@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-// const Task = require ('./models/Task')
+const taskRoutes = require ('./routes/taskRoute')
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -10,6 +10,9 @@ const PORT = process.env.PORT || 5000;
 // Middleware
 app.use(express.json());
 app.use(cors());
+
+// Rute utama
+app.use('/api/tasks', taskRoutes)
 
 // Koneksi ke MongoDB
 mongoose
