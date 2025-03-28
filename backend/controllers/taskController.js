@@ -30,25 +30,42 @@ const getAllTasks = async (req, res) => {
           filter.dueDate.$lte = new Date(req.query.dueDate_lte);
       }
     }
-    // Filter berdasarkan status
+    // ✅ Filter berdasarkan status
     // GET http://localhost:5000/api/tasks?status=completed
 
-    // Filter berdasarkan prioritas
+    // ✅ Filter berdasarkan priority
     // GET http://localhost:5000/api/tasks?priority=high
 
-    // Filter berdasarkan due date
+    // ✅ Filter berdasarkan dueDate (tanggal spesifik)
     // GET http://localhost:5000/api/tasks?dueDate=2025-04-01
 
-    // Gabungkan filter
+    // ✅ Filter berdasarkan rentang dueDate
+    // GET http://localhost:5000/api/tasks?dueDate_gte=2025-03-01&dueDate_lte=2025-04-01
+
+    // ✅ Kombinasi Filter
     // GET http://localhost:5000/api/tasks?status=pending&priority=low
 
-    // Sorting berdasarkan query parameter 'sort'
+
     if (req.query.sort) {
       const sortField = req.query.sort.startsWith("-")
         ? req.query.sort.slice(1)
         : req.query.sort;
       sort[sortField] = req.query.sort.startsWith("-") ? -1 : 1;
     }
+        // ✅ Sorting berdasarkan Priority (Ascending)
+    // GET http://localhost:5000/api/tasks?sort=priority
+
+    // ✅ Sorting berdasarkan Priority (Descending)
+    // GET http://localhost:5000/api/tasks?sort=-priority
+
+    // ✅ Sorting berdasarkan Due Date (Ascending)
+    // GET http://localhost:5000/api/tasks?sort=dueDate
+
+    // ✅ Sorting berdasarkan Due Date (Descending)
+    // GET http://localhost:5000/api/tasks?sort=-dueDate
+
+    // ✅ Sorting + Filtering Bersamaan
+    // GET http://localhost:5000/api/tasks?status=pending&sort=-priority
 
     const tasks = await Task.find(filter).sort(sort);
     res.status(200).json(tasks);
