@@ -14,8 +14,33 @@ const getAllTasks = async (req, res) => {
       filter.priority = req.query.priority;
     }
     if (req.query.dueDate) {
-      filter.dueDate = req.query.dueDate;
+      const dueDate = new Date(req.query.dueDate);
+      if (!isNaN(dueDate)) {
+        filter.dueDate = {
+          $gte: dueDate,
+          $lt: new Date(dueDate.getTime() + 86400000),
+        };
+      }
+
+      if (req.query.dueDate_gte || req.query.dueDate_lte) {
+        filter.dueDate = {};
+        if (req.query.dueDate_gte)
+          filter.dueDate.$gte = new Date(req.query.dueDate_gte);
+        if (req.query.dueDate_lte)
+          filter.dueDate.$lte = new Date(req.query.dueDate_lte);
+      }
     }
+    // Filter berdasarkan status
+    // GET http://localhost:5000/api/tasks?status=completed
+
+    // Filter berdasarkan prioritas
+    // GET http://localhost:5000/api/tasks?priority=high
+
+    // Filter berdasarkan due date
+    // GET http://localhost:5000/api/tasks?dueDate=2025-04-01
+
+    // Gabungkan filter
+    // GET http://localhost:5000/api/tasks?status=pending&priority=low
 
     // Sorting berdasarkan query parameter 'sort'
     if (req.query.sort) {
