@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getTasks, deleteTask } from "../services/taskService";
+import TaskForm from "../components/TaskForm";
 
 function TaskList() {
   const [tasks, setTasks] = useState([]);
@@ -25,6 +26,7 @@ function TaskList() {
   return (
     <div>
       <h2>Daftar Tugas</h2>
+      <TaskForm onTaskAdded={fetchTasks} />
       <ul>
         {tasks.map((task) => (
           <li key={task._id}>
