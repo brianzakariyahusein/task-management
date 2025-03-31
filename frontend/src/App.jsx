@@ -1,13 +1,12 @@
-import { useState } from "react";
-import viteLogo from "/vite.svg";
-import "./App.css";
+import TaskList from "./pages/TaskList";
 
 function App() {
   return (
     <div>
       <h1>Task Management</h1>
-      <p>Selamat datang di aplikasi manajemen tugas!</p>
+      <TaskList />
     </div>
   );
 }
+
 export default App;
