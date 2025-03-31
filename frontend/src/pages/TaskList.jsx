@@ -20,7 +20,7 @@ function TaskList() {
 
   const handleDelete = async (taskId) => {
     await deleteTask(taskId);
-    fetchTasks(); // Refresh daftar tugas setelah dihapus
+    fetchTasks();
   };
 
   return (
@@ -30,7 +30,10 @@ function TaskList() {
       <ul>
         {tasks.map((task) => (
           <li key={task._id}>
-            {task.title} - {task.status}
+            <strong>{task.title}</strong> - {task.status}
+            <p>{task.description}</p>
+            <p>Priority: {task.priority}</p>
+            <p>Due Date: {task.dueDate ? task.dueDate : "N/A"}</p>
             <button onClick={() => handleDelete(task._id)}>Hapus</button>
           </li>
         ))}
