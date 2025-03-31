@@ -19,3 +19,17 @@ export const deleteTask = async (taskId) => {
   const response = await axios.delete(`${API_URL}/${taskId}`);
   return response.data;
 };
+
+// Update tugas
+export const updateTask = async (taskId, updatedTask) => {
+  try {
+    const response = await fetch(`http://localhost:5000/api/tasks/${taskId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updateTask),
+    });
+    return await response.json();
+  } catch (error) {
+    console.error(`Gagal memperbarui tugas`, error);
+  }
+};
