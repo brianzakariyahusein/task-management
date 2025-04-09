@@ -47,6 +47,10 @@ const getAllTasks = async (req, res) => {
 const getTaskById = async (req, res) => {
   try {
     const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid Task ID" });
+    }
+
     const task = await Task.findById(id);
     if (!task) {
       return res.status(404).json({ message: "Task not found" });
@@ -64,6 +68,10 @@ const updateTaskById = async (req, res) => {
   try {
     const { id } = req.params;
     const { title, description } = req.body;
+    if (!title || !description) {
+      return res.status(400).json({ message: "Title and description are required" });
+    }
+
     const updatedTask = await Task.findByIdAndUpdate(
       id,
       { title, description },
@@ -86,6 +94,12 @@ const updateTaskById = async (req, res) => {
 const deleteTaskById = async (req, res) => {
   try {
     const { id } = req.params;
+
+    // Validate the format of the id
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid Task ID format" });
+    }
+
     const deletedTask = await Task.findByIdAndDelete(id);
     if (!deletedTask) {
       return res.status(404).json({ message: "Task not found" });
@@ -103,6 +117,12 @@ const updateTaskStatusById = async (req, res) => {
   try {
     const { id } = req.params;
     const { status } = req.body;
+
+    const allowedStatuses = ["pending", "in-progress", "completed"];
+    if (!allowedStatuses.includes(status)) {
+      return res.status(400).json({ message: "Invalid status value" });
+    }
+
     const updatedTask = await Task.findByIdAndUpdate(
       id,
       { status },
@@ -121,11 +141,10 @@ const updateTaskStatusById = async (req, res) => {
   }
 };
 
-module.export = {
+module.exports = {
   createTask,
+  deleteTaskById,
   getAllTasks,
   getTaskById,
   updateTaskById,
-  deleteTaskById,
-  updateTaskStatusById,
 };

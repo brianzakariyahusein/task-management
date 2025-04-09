@@ -3,8 +3,8 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 require("dotenv").config();
-
-// const mongoose = require("mongoose");
+const connectDB = require("./config/db");
+const taskRoutes = require("./routes/taskRoute");
 
 // Import Model Task
 const Task = require("./models/Task");
@@ -15,6 +15,9 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
+
+// Koneksi ke MongoDB
+connectDB();
 
 // PORT Server
 const PORT = process.env.PORT || 5000;

@@ -3,8 +3,8 @@ const {
   createTask,
   getAllTasks,
   getTaskById,
-  updateTask,
-  deleteTask,
+  updateTaskById,
+  deleteTaskById,
 } = require("../controllers/taskController");
 
 const router = express.Router();
@@ -19,10 +19,10 @@ router.get("/", getAllTasks);
 router.get("/:id", getTaskById);
 
 // Route untuk memperbarui task berdasarkan ID
-router.put("/:id", updateTask);
+router.put("/:id", updateTaskById);
 
 // Route untuk menghapus task berdasarkan ID
-router.delete("/:id", deleteTask);
+router.delete("/:id", deleteTaskById);
 
 // Export router
 module.exports = router;
