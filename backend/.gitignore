@@ -1,3 +1,5 @@
-node_modules/   
-.vscode/
+# Folder node_modules
+node_modules/
+
+# File environment
 .env

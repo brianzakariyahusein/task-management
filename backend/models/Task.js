@@ -1,19 +1,27 @@
 const mongoose = require("mongoose");
 
-// Definisi Schema untuk Task
 const TaskSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
+    trim: true,
   },
   description: {
     type: String,
-    required: true,
+    trim: true,
   },
   status: {
     type: String,
-    enum: ["Pending", "InProgress", "Completed"],
+    enum: ["pending", "in-progress", "completed"],
     default: "pending",
+  },
+  priority: {
+    type: String,
+    enum: ['low', 'medium', 'high'],
+    default: 'medium',
+  },
+  dueDate: {
+    type: Date,
   },
   createdAt: {
     type: Date,
@@ -21,7 +29,6 @@ const TaskSchema = new mongoose.Schema({
   },
 });
 
-// Membuat model berdasarkan schema yang sudah dibuat
 const Task = mongoose.model("Task", TaskSchema);
 
 module.exports = Task;
