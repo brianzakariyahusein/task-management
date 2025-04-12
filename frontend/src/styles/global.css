@@ -23,3 +23,24 @@ body {
   button:hover {
     background-color: #0056b3;
   }
+
+  .task-card {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: #fff;
+  }
+
+  .task-card h3 {
+    margin: 0;
+    font-size: 18px;
+  }
+
+  .task-card p {
+    margin: 5px 0;
+  }
+
+  .task-card button {
+    margin-left: 10px;
+  }
